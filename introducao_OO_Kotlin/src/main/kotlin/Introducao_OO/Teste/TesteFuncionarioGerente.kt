@@ -6,8 +6,9 @@ import Introducao_OO.Gerente
 import java.math.BigDecimal
 
 fun main(){
-    val eduardo = Gerente("eduardo magalhães","1234", 7000.0 )
+    val eduardo = Gerente("eduardo magalhães","1234", 7000.0,"senha123" )
 
     ImprimeRelatorioFuncionario.imprime(eduardo)
+    TesteAutenticacao().autentica(eduardo)
 }
 
