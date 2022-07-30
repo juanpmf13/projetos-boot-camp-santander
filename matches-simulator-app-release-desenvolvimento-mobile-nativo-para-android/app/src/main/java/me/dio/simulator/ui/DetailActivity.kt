@@ -30,22 +30,16 @@ public class DetailActivity extends AppCompatActivity {
 }
 */
 
-package me.dio.simulator.ui;
+package me.dio.simulator.ui
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-
-import java.util.PrimitiveIterator;
-
-import me.dio.simulator.databinding.ActivityDetailBinding;
-import me.dio.simulator.databinding.ActivityMainBinding;
+import me.dio.simulator.databinding.ActivityDetailBinding
 import me.dio.simulator.domain.Match
 
 
-public class DetailActivity: AppCompatActivity() {
+class DetailActivity: AppCompatActivity() {
 
     object Extras{
         const val MATCH = "EXTRA_MATCH"

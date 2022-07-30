@@ -104,21 +104,18 @@ private fun RecyclerView.layoutManager(linearLayoutManager: LinearLayoutManager)
 
 package me.dio.simulator.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
- import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-
 import android.os.Bundle;
-
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
 
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -126,8 +123,8 @@ import me.dio.simulator.R;
 import me.dio.simulator.data.MatchesApi;
 import me.dio.simulator.databinding.ActivityMainBinding;
 import me.dio.simulator.domain.Match;
- import me.dio.simulator.ui.adapter.MatchesAdapter;
- import retrofit2.Call;
+import me.dio.simulator.ui.adapter.MatchesAdapter;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -136,7 +133,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 private ActivityMainBinding binding ;
 private MatchesApi matchesApi ;
-private MatchesAdapter matchesAdapter;
+private MatchesAdapter matchesAdapter = new MatchesAdapter(Collections.emptyList());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +160,9 @@ private void setupHttpClient() {
         }
 
 private void setupFloatingActionButton() {
-        binding.fabSimulate.setOnClickListener(view-> view.animate().rotationBy(360).setDuration(1000).setListener(new AnimatorListenerAdapter() {
+        binding.fabSimulate.setOnClickListener(view->{
+
+                view.animate().rotationBy(360).setDuration(1000).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
@@ -176,7 +175,9 @@ private void setupFloatingActionButton() {
                     matchesAdapter.notifyItemChanged(i);
                 }
             }
-        }));
+        });
+
+        });
         }
 
     private void setupMatchesRefresh() {
@@ -184,9 +185,9 @@ private void setupFloatingActionButton() {
     }
 private void  setupMatchesList() {
         binding.rvMatches.setHasFixedSize(true);
-
         binding.rvMatches.setLayoutManager(new LinearLayoutManager(this));
-    findMatchesFromApi();
+        binding.rvMatches.setAdapter(matchesAdapter);
+        findMatchesFromApi();
 }
 
     private void findMatchesFromApi() {
