@@ -1,5 +1,7 @@
 package me.dio.soccernews.ui.news;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,40 +9,46 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.dio.soccernews.data.remote.SoccerNewsApi;
 import me.dio.soccernews.domain.News;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewsViewModel extends ViewModel {
 
-    private final MutableLiveData<List<News>> mNews;
+    private final MutableLiveData<List<News>> mNews = new MutableLiveData<>();
+    private final SoccerNewsApi api;
 
     public NewsViewModel() {
-        mNews = new MutableLiveData<>();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://juanpmf13.github.io/soccer-news-api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        //https://juanpmf13.github.io/soccer-news-api/
+        api = retrofit.create(SoccerNewsApi.class);
+        findNews();
+    }
 
-        //TODO remover mock de  notícias
-        List<News> news = new ArrayList<>();
-        news.add(new News("Boa Vista Tem Desfalque Importante ","Você toca uma criatura e estimula sua habilidade de cura " +
-                "natural. O alvo recupera 4d8 + 15 pontos de vida. Pela " +
-                "duração da magia o alvo recupera 1 ponto de vida no " +
-                "início de cada turno dela (10 pontos de vida por minuto)." +
-                "Os membro decepados do corpo do alvo (dedos, pernas, " +
-                "rabos e assim por diante), se tiver algum, são restaurados " +
-                "após 2 minutos. Se você tiver a parte decepada e segura-la contra o topo, a magia, instantaneamente, faz com que " +
-                "o membro se grude ao toco."));
-        news.add(new News("Boa Vista Vs Flamengo Nessa Segunda","Um relâmpago forma uma linha de 30 metros de " +
-                "comprimento e 1,5 metro de largura que é disparado por " +
-                "você em uma direção, à sua escolha. Cada criatura na " +
-                "linha deve realizar um teste de resistência de Destreza. " +
-                "Uma criatura sofre 8d6 de dano elétrico se falhar na " +
-                "resistência ou metade desse dano se obtiver sucesso." +
-                "O relâmpago incendeia objetos inflamáveis na área " +
-                "que não estejam sendo vestidos ou carregados."));
-        news.add(new News("Boa Vista Campeão Mundia?","Ao seu toque, todas as maldições afetando uma criatura " +
-                "ou objeto terminam. Se o objeto for um item mágico " +
-                "amaldiçoado, sua maldição persiste, mas a magia rompe a " +
-                "sintonia do portador com o objeto, então permitindo que " +
-                "ele o remova ou descarte."));
+    private void findNews() {
+        api.getNews().enqueue(new Callback<List<News>>() {
+            @Override
+            public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+                if(response.isSuccessful()){
+                    mNews.setValue(response.body());
+                }
+                else{
+                    //TODO pensar em uma estratégia de tratamento de erros
+                }
+            }
 
-        mNews.setValue(news);
+            @Override
+            public void onFailure(Call<List<News>> call, Throwable t) {
+                //TODO pensar em uma estratégia de tratamento de erros
+            }
+        });
     }
 
     public LiveData<List<News>> getNews() {
