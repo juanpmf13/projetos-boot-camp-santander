@@ -2,8 +2,10 @@
     <string name="app_name">Soccer News</string>
     <string name="title_news">News</string>
     <string name="title_favorites">Favorites</string>
-    <string name="txt_open_link">Open Link</string>
-    <string name="cd_news_image">News image</string>
-    <string name="cd_favorite_image">Favorite image</string>
-    <string name="cd_share_image">Share image</string>
+    <string name="notifications">Notifications</string>
+    <string name="open_link">Open link</string>
+    <string name="cd_favorite">Favorite</string>
+    <string name="cd_share">Share</string>
+    <string name="cd_image_news">Image news</string>
+    <string name="error_network">Network error.</string>
 </resources>

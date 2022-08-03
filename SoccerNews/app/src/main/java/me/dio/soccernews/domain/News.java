@@ -1,13 +1,37 @@
 package me.dio.soccernews.domain;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class News {
+    @PrimaryKey
+    private int id;
+
     private String title;
     private String description;
     private String image;
     private String link;
+    private boolean favorite;
 
     public String getTitle() {
         return title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public void setTitle(String title) {
