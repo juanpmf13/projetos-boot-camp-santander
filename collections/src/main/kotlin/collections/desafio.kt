@@ -2,22 +2,19 @@ package collections
 
 import java.util.Scanner
 
-fun main() {
+fun main(args: Array<String>) {
+    val n = readLine()!!.toInt()
+    var a = 0
+    var b = 1
 
 //TODO: Complete os espaços em branco com uma possível solução para o desafio
 
-    val notas: IntArray = intArrayOf(100, 50, 20, 10, 5, 2, 1)
-    var valor = readLine()!!.toInt()
+    for (i in 1..(n -1)) {
+        print("${a}  ")
 
-    println(  valor    )
-
-    for (i in 0..(notas.size - 1)) {
-        if (valor >= notas[i]) {
-
-            println("${  valor/notas[i]     } nota(s) de R$ " + notas[i] + ",00")
-        } else {
-            println("0 nota(s) de R$ " + notas[i] + ",00")
-        }
-        valor = valor % notas[i]
+        val sum = a+b
+            a = b
+                b = sum
     }
+    println("$a  ")
 }
