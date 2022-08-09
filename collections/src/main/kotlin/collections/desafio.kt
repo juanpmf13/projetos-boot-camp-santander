@@ -2,19 +2,25 @@ package collections
 
 import java.util.Scanner
 
-fun main(args: Array<String>) {
-    val n = readLine()!!.toInt()
-    var a = 0
-    var b = 1
+fun main() {
+    val x = (readLine() ?: return).toInt()
+    val y = (readLine() ?: return).toInt()
+    var total = 0
 
 //TODO: Complete os espaços em branco com uma possível solução para o desafio
 
-    for (i in 1..(n -1)) {
-        print("${a}  ")
-
-        val sum = a+b
-            a = b
-                b = sum
+    if (x < y) {
+        for (i in x..y) {
+            if (  i%13!=0  ) {
+                total += i
+            }
+        }
+    } else {
+        for (i in y..x) {
+            if (  i%13!=0    ) {
+                total += i
+            }
+        }
     }
-    println("$a  ")
+    println(total)
 }
